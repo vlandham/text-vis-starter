@@ -1,7 +1,14 @@
 var vis = function() {
   var width = 900;
+  var height = 900;
   var data = [];
-  var div = null;
+  var svg = null;
+
+  var bubble = d3.layout.pack()
+    .sort(null)
+    .size([width, height])
+    .value(function(d) { return d.count; })
+    .padding(1.5);
 
   var wordScale = d3.scale.linear()
     .range([10,100]);
@@ -10,8 +17,10 @@ var vis = function() {
     var words = getWords(text.toLowerCase());
     data = countWords(words);
 
-    div = d3.select("#vis").append("div")
-      .style("width", width + "px");
+    svg = d3.select("#vis").append("svg")
+      .attr("width", width)
+      .attr("height", height)
+
 
     update();
   }
@@ -21,20 +30,29 @@ var vis = function() {
     var dataExtent = d3.extent(data, function(d) { return d.count; });
     wordScale.domain(dataExtent);
 
-    var word = div.selectAll('.word')
-      .data(data)
+    console.log(bubble.nodes({children:data}))
 
-    word.enter()
-      .append('p')
-      .style('font-size', function(d) { return wordScale(d.count); })
-      .style('padding-right', 15)
-      .style('padding-bottom', 15)
-      .style('float', 'left')
+    var word = svg.selectAll('.word')
+      .data(bubble.nodes({children:data}))
+
+    var wordE = word.enter()
+      .append('g')
+      .attr('class', 'word')
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+    wordE.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('font-size', function(d) { return wordScale(d.count); })
       .text(function(d) { return d.word; });
+  }
+
+  function makeNetwork(nodes) {
+    return {children:nodes};
   }
 
   return chart;
 }
+
 
 var textVis = vis();
 
