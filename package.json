@@ -1,0 +1,22 @@
+{
+  "name": "text-vis-starter",
+  "version": "0.0.1",
+  "description": "Starting toolkit for interactive text visualization",
+  "main": "",
+  "scripts": {
+    "start": "./node_modules/.bin/http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vlandham/text-vis-starter.git"
+  },
+  "author": "Jim Vallandingham <jim@bocoup.com> (http://vallandingham.me/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vlandham/text-vis-starter/issues"
+  },
+  "homepage": "https://github.com/vlandham/text-vis-starter#readme",
+  "devDependencies": {
+    "http-server": "^0.8.5"
+  }
+}
