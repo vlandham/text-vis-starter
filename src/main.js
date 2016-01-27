@@ -4,10 +4,10 @@ var vis = function() {
   var div = null;
 
   var wordScale = d3.scale.linear()
-    .range([10,140]);
+    .range([10,100]);
 
   var chart = function(text) {
-    var words = getWords(text);
+    var words = getWords(text.toLowerCase());
     data = countWords(words);
 
     div = d3.select("#vis").append("div")
@@ -28,6 +28,7 @@ var vis = function() {
       .append('p')
       .style('font-size', function(d) { return wordScale(d.count); })
       .style('padding-right', 15)
+      .style('padding-bottom', 15)
       .style('float', 'left')
       .text(function(d) { return d.word; });
   }
@@ -38,13 +39,11 @@ var vis = function() {
 var textVis = vis();
 
 function display(error, text) {
-
   if(error) {
     console.log(error)
   }
 
   textVis(text);
-
 }
 
 d3.text("data/alice.txt", display);
